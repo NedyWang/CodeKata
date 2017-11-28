@@ -70,7 +70,6 @@ void ArraySolution::print1ToMaxNNumbers(const int n)
 
     while(!Increment(numbers, n)) {
         printNumber(numbers, n);
-        continue;
     }
 //    std::cout << numbers << std::endl;
 //    printNumber(numbers, n);
