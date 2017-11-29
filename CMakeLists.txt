@@ -13,3 +13,4 @@ add_subdirectory(Algorithm/TreeSolution)
 
 add_subdirectory(DesignPattern/DecoratorPattern)
 
+add_subdirectory(LeetCode)
