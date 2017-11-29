@@ -4,7 +4,7 @@
 #include "ListNode.h"
 #include "../TreeSolution/TreeNode.h"
 
-void DoConvert(BTreeNode *pRoot, BTreeNode **pLastNodeInList);
+void DoConvert(BTreeNode *pNode, BTreeNode **pLastNodeInList);
 
 template<typename T>
 BTreeNode *ConvertBTreeToList(BTreeNode *pRoot) {
@@ -21,14 +21,14 @@ BTreeNode *ConvertBTreeToList(BTreeNode *pRoot) {
     return pHead;
 }
 
-void DoConvert(BTreeNode *pRoot, BTreeNode **pLastNodeInList) {
-    if (pRoot == nullptr) {
+void DoConvert(BTreeNode *pNode, BTreeNode **pLastNodeInList) {
+    if (pNode == nullptr) {
         return;
     }
 
-    BTreeNode* pCurrent = pRoot;
-    if (pRoot->m_pLeft) {
-        DoConvert(pRoot->m_pLeft, pLastNodeInList);
+    BTreeNode* pCurrent = pNode;
+    if (pNode->m_pLeft) {
+        DoConvert(pNode->m_pLeft, pLastNodeInList);
     }
 
     pCurrent->m_pLeft = *pLastNodeInList;
@@ -38,7 +38,7 @@ void DoConvert(BTreeNode *pRoot, BTreeNode **pLastNodeInList) {
     }
 
     *pLastNodeInList = pCurrent;
-    if (pRoot->m_pRight) {
-        DoConvert(pRoot->m_pRight, pLastNodeInList);
+    if (pNode->m_pRight) {
+        DoConvert(pNode->m_pRight, pLastNodeInList);
     }
 }
