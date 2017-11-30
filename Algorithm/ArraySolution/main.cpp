@@ -17,7 +17,8 @@ void testMultiSet(std::vector<int> data)
     std::cout << std::endl;
 }
 
-extern void unit_test_max_sub_sequence_sum();
+//extern void unit_test_max_sub_sequence_sum();
+extern void unitTestMaxSum();
 
 int main()
 {
@@ -26,5 +27,6 @@ int main()
 //    std::vector<int> vec(data, data + sizeof(data)/sizeof(data[0]));
 //    testMultiSet(vec);
 //    ArraySolution::GetLeastNumbersMethod_2(vec, 4);
-    unit_test_max_sub_sequence_sum();
+//    unit_test_max_sub_sequence_sum();
+    unitTestMaxSum();
 }
