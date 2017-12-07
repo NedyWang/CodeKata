@@ -34,7 +34,7 @@ void DoConvert(BTreeNode *pNode, BTreeNode **pLastNodeInList) {
     pCurrent->m_pLeft = *pLastNodeInList;
 
     if ((*pLastNodeInList) != nullptr) {
-        pCurrent->m_pRight = *pLastNodeInList;
+        (*pLastNodeInList)->m_pRight = pCurrent;
     }
 
     *pLastNodeInList = pCurrent;

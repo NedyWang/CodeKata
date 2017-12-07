@@ -59,8 +59,11 @@
 //    Solution *solution;
 //};
 //
+void unitTestNextPermutation();
+
 int main(int argc, char const *argv[])
 {
 //    UnitTest ut;
+    unitTestNextPermutation();
     return 0;
 }

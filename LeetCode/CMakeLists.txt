@@ -3,5 +3,5 @@ project(leet_code)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES MedianSortedArrays.cpp LongestPalindrome.cpp ZigzargConvert.cpp LengthOfLongestSubstring.cpp main.cpp ReverseInteger.cpp IsPalidrome.cpp LetterCombinations.cpp ValidParentheses.cpp GenerateParentheses.cpp)
+set(SOURCE_FILES MedianSortedArrays.cpp LongestPalindrome.cpp ZigzargConvert.cpp LengthOfLongestSubstring.cpp main.cpp ReverseInteger.cpp IsPalidrome.cpp LetterCombinations.cpp ValidParentheses.cpp GenerateParentheses.cpp NextPermulation.cpp)
 add_executable(leet_code ${SOURCE_FILES})
