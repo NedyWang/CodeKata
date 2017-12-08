@@ -13,8 +13,9 @@ using namespace std;
 //namespace alpha {
 class Thread {
 public:
-    explicit Thread(bool bCreateDetached = false, bool bDeleteWhenComplete = true,
-                    const char *name = nullptr) :
+    explicit Thread(bool bCreateDetached = false,
+                    bool bDeleteWhenComplete = true,
+                    const char *name = nullptr):
             m_bCreateDetached(bCreateDetached),
             m_bDeleteWhenComplete(bDeleteWhenComplete),
             m_id(0) {
