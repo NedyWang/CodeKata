@@ -11,47 +11,49 @@
 using namespace std;
 
 //namespace alpha {
-    class Thread {
-    public:
-        explicit Thread(bool bCreateDetached = false, bool bDeleteWhenComplete = true, const char *name = nullptr) :
-                m_bCreateDetached(bCreateDetached),
-                m_bDeleteWhenComplete(bDeleteWhenComplete),
-                m_id(0) {
-            m_name = name == nullptr ? "unnamed" : name;
-        }
+class Thread {
+public:
+    explicit Thread(bool bCreateDetached = false, bool bDeleteWhenComplete = true,
+                    const char *name = nullptr) :
+            m_bCreateDetached(bCreateDetached),
+            m_bDeleteWhenComplete(bDeleteWhenComplete),
+            m_id(0) {
+        m_name = name == nullptr ? "unnamed" : name;
+    }
 
-        virtual ~Thread() = default;
-        virtual int main() = 0;
+    virtual ~Thread() = default;
 
-        bool join(void **m_return = nullptr) {
-            int status = pthread_join(m_id, m_return);
-            return status == 0;
-        }
+    virtual int main() = 0;
 
-        bool go();
+    bool join(void **m_return = nullptr) {
+        int status = pthread_join(m_id, m_return);
+        return status == 0;
+    }
 
-        bool deleteWhenComplete() {
-            return m_bDeleteWhenComplete;
-        }
+    bool go();
 
-        void setName(const string name) {
-            m_name = name;
-        }
+    bool deleteWhenComplete() {
+        return m_bDeleteWhenComplete;
+    }
 
-        string getName() {
-            return m_name;
-        }
+    void setName(const string name) {
+        m_name = name;
+    }
 
-        pthread_t getId() {
-            return m_id;
-        }
+    string getName() {
+        return m_name;
+    }
 
-    private:
-        bool m_bCreateDetached;
-        bool m_bDeleteWhenComplete;
-        string m_name;
-        pthread_t m_id;
-    };
+    pthread_t getId() {
+        return m_id;
+    }
+
+private:
+    bool m_bCreateDetached;
+    bool m_bDeleteWhenComplete;
+    string m_name;
+    pthread_t m_id;
+};
 //}
 
 
