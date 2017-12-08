@@ -53,6 +53,7 @@ void tcp_poll_server()
                     }
                     is_full = false;
                     poll_set[i].fd = client_fd;
+                    ++ numbers;
                 }
                 if (is_full) {
                     std::cout<< "too many client connections." << std::endl;
@@ -67,10 +68,12 @@ void tcp_poll_server()
                         // the connection is closed by client
                         shutdown(poll_set[i].fd, SHUT_RDWR);
                         poll_set[i].fd = -1;
+                        -- numbers;
                     } else if (n < 0) {
                         std::cout << "RST reveived" << std::endl;
                         shutdown(poll_set[i].fd, SHUT_RD);
                         poll_set[i].fd = -1;
+                        -- numbers;
                     } else {
                         write(poll_set[i].fd, buf, sizeof(buf));
                     }
@@ -79,6 +82,5 @@ void tcp_poll_server()
                 ++i;
             }
         }
-
     }
 }
