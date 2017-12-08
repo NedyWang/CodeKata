@@ -8,7 +8,7 @@
 
 //using namespace alpha;
 
-class EchoThread:public Thread {
+class EchoThread: public Thread {
 public:
     explicit EchoThread(bool bCreateDetached = false,
                         bool bDeleteWhenComplete = true,
