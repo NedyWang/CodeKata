@@ -1,7 +1,9 @@
 //
 // Created by root on 12/9/17.
 //
-
+/*
+ * This is a very simple iterative server.
+ */
 
 #include <zconf.h>
 #include <netinet/in.h>
