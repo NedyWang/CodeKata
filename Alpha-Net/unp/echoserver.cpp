@@ -11,6 +11,7 @@
 #include <string.h>
 #include <iostream>
 #include <netinet/in.h>
+#include <wait.h>
 #include "unp.h"
 
 #define MAX_LEN 1024
@@ -67,8 +68,21 @@ again:
     }
 }
 
+void sig_chld(int signo) {
+    /*
+     * SIGCHLD, child process exit, use waitpid to process zombie child-process
+     */
+    pid_t pid;
+    int stat;
+    while ((pid = waitpid(-1, &stat, WNOHANG)) > 0) {
+        std::cout << "child " << pid << "terminated" << std::endl;
+    }
+    return;
+}
+
 int main()
 {
+    signal(SIGCHLD, sig_chld);
     echo_server();
     return 0;
 }
