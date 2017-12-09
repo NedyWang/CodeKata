@@ -38,14 +38,45 @@ void echo_client(int argc, char **argv)
 
 void str_cli(FILE *fp, int sock_fd)
 {
+    int max_fd = std::max(fileno(fp), sock_fd);
+    int stdin_eof = 0;
+
     char send_line[1024], rcv_line[1024];
-    while( fgets(send_line, MAX_LEN, fp) != nullptr) {
-        write(sock_fd, send_line, strlen(send_line));
-        if (readline(sock_fd, rcv_line, MAX_LEN) == 0) {
-            std::cerr << "str_cli: server terminated prematurely" << std::endl;
+    while (true) {
+        fd_set rset;
+        FD_ZERO(&rset);
+        FD_SET(sock_fd, &rset);
+        FD_SET(fileno(fp), &rset);
+
+        int n = select(max_fd + 1, &rset, nullptr, nullptr, nullptr);
+        if (FD_ISSET(sock_fd, &rset)) {
+            if (readline(sock_fd, rcv_line, MAX_LEN) == 0) { // FIN received
+                if (stdin_eof == 1) {
+                    return;
+                } else {
+                    std::cerr << "str_cli: server terminated prematurely" << std::endl;
+                    return;
+                }
+            }
+            fputs(rcv_line, stdout);
         }
-        fputs(rcv_line, stdout);
+        if (FD_ISSET(fileno(fp), &rset)) {
+            if (fgets(send_line, MAX_LEN, fp) == nullptr) {
+                stdin_eof = 1;
+                shutdown(sock_fd, SHUT_WR);
+                FD_CLR(sock_fd, &rset);
+                continue;
+            }
+            write(sock_fd, send_line, strlen(send_line));
+        }
     }
+//    while( fgets(send_line, MAX_LEN, fp) != nullptr) {
+//        write(sock_fd, send_line, strlen(send_line));
+//        if (readline(sock_fd, rcv_line, MAX_LEN) == 0) {
+//            std::cerr << "str_cli: server terminated prematurely" << std::endl;
+//        }
+//        fputs(rcv_line, stdout);
+//    }
 }
 
 int main(int argc, char **argv)
