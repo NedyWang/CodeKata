@@ -62,6 +62,10 @@ void str_cli(FILE *fp, int sock_fd)
         }
         if (FD_ISSET(fileno(fp), &rset)) {
             if (fgets(send_line, MAX_LEN, fp) == nullptr) {
+                /*
+                 * yes, now, stop read from stdin, however, it still need to listen on socket
+                 * so that it would not miss any data from server.
+                 */
                 stdin_eof = 1;
                 shutdown(sock_fd, SHUT_WR);
                 FD_CLR(sock_fd, &rset);
