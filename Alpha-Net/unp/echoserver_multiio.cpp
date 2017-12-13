@@ -125,7 +125,7 @@ void echoserver_poll()
     while(true) {
         int n_ready = poll(client, max_i, -1);
         if (client[0].revents & POLLRDNORM) {
-            size_t client_len = sizeof(client_address);
+            socklen_t client_len = sizeof(client_address);
             int conn_fd = accept(client[0].fd, (struct sockaddr*)&client_address, &client_len);
             int i = 1;
             while( i < OPEN_MAX) {
