@@ -175,66 +175,6 @@ void echoserver_poll()
         }
     }
 }
-
-#include <sys/epoll.h>
-#define MAX_EVENTS
-void echoserver_epoll_lt()
-{
-    int listen_fd;
-
-    struct sockaddr_in server_address, client_address;
-    bzero(&server_address, sizeof(server_address));
-    server_address.sin_family = AF_INET;
-    server_address.sin_port = htons(SERVER_PORT);
-    server_address.sin_addr.s_addr = htonl(INADDR_ANY);
-
-    listen_fd = socket(AF_INET, SOCK_STREAM, 0);
-    bind(listen_fd, (struct sockaddr*)&server_address, sizeof(server_address));
-
-    listen(listen_fd, 5);
-
-    int efd = epoll_create(1);
-    epoll_event event;
-    bzero(&event, sizeof(epoll_event));
-    event.data.fd = listen_fd;
-    event.events |= EPOLLRDNORM;
-    epoll_ctl(efd, EPOLL_CTL_ADD, listen_fd, &event);
-
-    char buf[MAX_LEN];
-    epoll_event events[MAX_EVENTS] = {0};
-    while (true) {
-        int nReady = epoll_wait(efd, events, MAX_EVENTS, -1);
-        for (int i = 0; i < nReady; ++i){
-            if (listen_fd == events[i].data.fd) {
-                if (events[i].events & EPOLLIN) {
-                    socklen_t client_len = sizeof(client_address);
-                    int conn_fd = accept(listen_fd, (struct sockaddr*)&client_address, &client_len);
-                    epoll_event client_event;
-                    client_event.data.fd = conn_fd;
-                    client_event.events |= EPOLLRDNORM;
-                    epoll_ctl(efd, EPOLL_CTL_ADD, conn_fd, &client_event);
-                }
-            } else {
-                int n = readline(events[i].data.fd, buf, MAX_LEN);
-                if (n < 0) {
-                    if (errno == ECONNREFUSED) {
-                        close(events[i].data.fd);
-                        epoll_ctl(efd, EPOLL_CTL_DEL, events[i].data.fd, &events[i]);
-                    } else {
-                        std::cout << "read error" << std::endl;
-                        continue;
-                    }
-                } else if (n == 0) {
-                    close(events[i].data.fd);
-                    epoll_ctl(efd, EPOLL_CTL_DEL, events[i].data.fd, &events[i]);
-                } else {
-                    writen(events[i].data.fd, buf, n);
-                }
-            }
-        }
-    }
-}
-
 int main(int argc, char **argv)
 {
     echoserver_select();

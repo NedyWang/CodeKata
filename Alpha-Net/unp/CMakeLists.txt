@@ -15,7 +15,7 @@ add_executable(daytimeclient ${SOURCE_FILES_DAYTIME_CLIENT})
 set(SOURCE_FILES_ECHO_SERVER echoserver.cpp  unp.h unp.cpp)
 add_executable(echoserver ${SOURCE_FILES_ECHO_SERVER})
 
-set(SOURCE_FILES_ECHO_CLIENT echoclient.cpp unp.h unp.cpp)
+set(SOURCE_FILES_ECHO_CLIENT echoclient.cpp unp.h unp.cpp epoll_server.cpp)
 add_executable(echoclient ${SOURCE_FILES_ECHO_CLIENT})
 
 set(SOURCE_FILES_ECHO_SERVER_MULTI_IO echoserver.cpp unp.h unp.cpp)
