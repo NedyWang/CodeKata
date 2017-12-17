@@ -8,7 +8,8 @@
 #include <queue>
 #include <iostream>
 
-std::vector<std::string> letterCombinations(std::string digits) {
+std::vector<std::string> letterCombinations(std::string digits)
+{
     std::vector<std::string> res;
     if (digits.empty()) {
         return res;
@@ -23,16 +24,15 @@ std::vector<std::string> letterCombinations(std::string digits) {
     for (int i = 1; i < digits.size(); ++ i) {
         auto size = str_queue.size();
         for (int k = 0; k < size; ++ k) {
-            std::string str = std::move(str_queue.front());
-            str_queue.pop();
             for (auto ch: dict[digits[i] - '2']) {
-                str_queue.push(str + ch);
+                str_queue.push(str_queue.front() + ch);
             }
+            str_queue.pop();
         }
     }
 
     while (!str_queue.empty()) {
-        res.push_back(std::move((str_queue.front())));
+        res.push_back(std::move(str_queue.front()));
         str_queue.pop();
     }
     return res;
