@@ -6,33 +6,33 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <iostream>
 
 std::vector<std::string> letterCombinations(std::string digits) {
     std::vector<std::string> res;
-    if (digits.size() == 0) {
+    if (digits.empty()) {
         return res;
     }
     std::queue<std::string> str_queue;
     std::string dict[] = {"abc", "def", "ghi","jkl","mno","pqrs","tuv","wxyz"};
 
-    for (int j = 0; j < dict[digits[0] - '2'].size(); ++j) {
-        std::string tmp(1, dict[digits[0] - '2'][j]);
-        str_queue.push(tmp);
+    for (auto ch: dict[digits[0] - '2']) {
+        str_queue.push(std::string(1, ch));
     }
 
     for (int i = 1; i < digits.size(); ++ i) {
-        int size = str_queue.size();
+        auto size = str_queue.size();
         for (int k = 0; k < size; ++ k) {
-            std::string str = str_queue.front();
+            std::string str = std::move(str_queue.front());
             str_queue.pop();
-            for (int j = 0; j < dict[digits[i] - '2'].size(); ++j) {
-                str_queue.push(str + dict[digits[i] - '2'][j]);
+            for (auto ch: dict[digits[i] - '2']) {
+                str_queue.push(str + ch);
             }
         }
     }
 
     while (!str_queue.empty()) {
-        res.push_back(str_queue.front());
+        res.push_back(std::move((str_queue.front())));
         str_queue.pop();
     }
     return res;
