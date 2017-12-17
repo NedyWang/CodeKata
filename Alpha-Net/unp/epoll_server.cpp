@@ -10,25 +10,31 @@
 #include "unp.h"
 
 #define MAX_LEN 1024
+#define LISTEN_PORT 8080
+#define LISTEN_QUEUE_LEN 5
+#define MAX_EVENT_NUMBER 1024
+
+/**
+ * set fd as no-block fd
+ * @param fd file description
+ */
 
 int setNoBlocking(int fd)
 {
-    /**
-     * @brief: set fd as no-block fd
-     */
     int original_option = fcntl(fd, F_GETFL);
     int option = original_option | O_NONBLOCK;
     fcntl(fd, F_SETFL, option);
     return original_option;
 }
 
+/**
+ * Add fd to efd epoll event table
+ * @param efd: epoll ctl fd
+ * @param fd: fd to be added into efd table
+ * @param et: set fd as ET model
+ */
 void addEvent(int efd, int fd, bool et = false)
 {
-    /**
-     * @param efd: epoll ctl fd
-     * @param fd: fd to be added into efd table
-     * @param et: set fd as ET model
-     */
     epoll_event event;
     event.data.fd = fd;
     event.events = EPOLLIN;
@@ -39,15 +45,16 @@ void addEvent(int efd, int fd, bool et = false)
     epoll_ctl(efd, EPOLL_CTL_ADD, fd, &event);
 }
 
+
+/**
+ * epoll server demo, LT(level trigle) model
+ * @param: efd
+ * @param: listen_fd
+ * @param: events
+ * @param: number
+ */
 void ltModel(int efd, int listen_fd, epoll_event *events, int number)
 {
-    /**
-     * @param: efd
-     * @param: listen_fd
-     * @param: events
-     * @param: number
-     */
-
     char buf[MAX_LEN];
     for (auto i = 0; i < number; ++i) {
         int sock_fd = events[i].data.fd;
@@ -75,15 +82,16 @@ void ltModel(int efd, int listen_fd, epoll_event *events, int number)
 
 }
 
+/**
+ * epoll server demo, ET(edge trigle model)
+ * @param efd:
+ * @param listen_fd:
+ * @param events:
+ * @param number
+ */
+
 void etModel(int efd, int listen_fd, epoll_event *events, int number)
 {
-    /**
-     * @param efd:
-     * @param listen_fd:
-     * @param events:
-     * @param number
-     */
-
     char buf[MAX_LEN];
     for (auto i = 0; i < number; ++i) {
         int sock_fd = events[i].data.fd;
@@ -118,15 +126,13 @@ void etModel(int efd, int listen_fd, epoll_event *events, int number)
     }
 }
 
-#define LISTEN_PORT 8080
-#define LISTEN_QUEUE_LEN 5
-#define MAX_EVENT_NUMBER 1024
+/**
+ * create a epoll server demo
+ * @param et: EdgeModel or LevelModel
+ */
+
 void epoll_server(bool et = false)
 {
-    /**
-     * create a epoll server demo
-     * @param et: EdgeModel or LevelModel
-     */
     struct sockaddr_in server_address;
     server_address.sin_addr.s_addr = htonl(INADDR_ANY);
     server_address.sin_port = htons(LISTEN_PORT);
