@@ -6,7 +6,7 @@
  * @param start
  * @param hole
  * @param top
- * @param value
+ * @param value = *(stat + hole)
  */
 void pushHeap(int *start, int hole, int top, int value) {
     int parent = (hole - 1) / 2;
