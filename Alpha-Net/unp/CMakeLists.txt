@@ -20,3 +20,10 @@ add_executable(echoclient ${SOURCE_FILES_ECHO_CLIENT})
 
 set(SOURCE_FILES_ECHO_SERVER_MULTI_IO echoserver.cpp unp.h unp.cpp)
 add_executable(echoserver_multi_io ${SOURCE_FILES_ECHO_SERVER_MULTI_IO})
+
+set(SOURCE_FILES_TIME_SERVER_MULTI_THD timeserver_multithread.cpp ../Thread/Thread.cpp ../Thread/Thread.h)
+add_executable(timeserver_multithd ${SOURCE_FILES_TIME_SERVER_MULTI_THD})
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+target_link_libraries(timeserver_multithd Threads::Threads)

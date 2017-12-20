@@ -2,7 +2,7 @@
 // Created by root on 11/29/17.
 //
 
-/*
+/**
  * Determine whether an integer is a palindrome. Do this without extra space.
  */
 

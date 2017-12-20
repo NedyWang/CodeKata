@@ -91,10 +91,10 @@ bool ArraySolution::Increment(char *numbers, const int length)
             }
             takeOver = 1;
             sum -= 10;
-            numbers[i] =  sum + '0';
+            numbers[i] =  char(sum)+ '0';
         }
         else {
-            numbers[i] = sum  + '0';
+            numbers[i] = char(sum)  + '0';
             break;
         }
     }

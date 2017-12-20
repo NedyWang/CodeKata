@@ -10,9 +10,8 @@ add_subdirectory(Algorithm/SortSolution)
 add_subdirectory(Algorithm/NumberSolution)
 add_subdirectory(Algorithm/TreeSolution)
 
-
 add_subdirectory(DesignPattern/DecoratorPattern)
-
 add_subdirectory(LeetCode)
-
 add_subdirectory(Alpha-Net)
+add_subdirectory(Keep)
+add_subdirectory(BasicAlgo)
