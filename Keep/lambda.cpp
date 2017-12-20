@@ -16,15 +16,18 @@ void func(std::function<void()> func)
 int main()
 {
     std::vector<int> vec = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int x = 5;
-    vec.erase(std::remove_if(vec.begin(), vec.end(), [x](int n) { return x < n;}), vec.end());
-    std::cout << "vec: ";
-    std::for_each(vec.begin(), vec.end(), [](int i) {std::cout << i << " ";});
-    std::cout << std::endl;
-
-    func([x](){std::cout << "lambda..." << std::endl << "x = " << x << std::endl; });
-    std::priority_queue<int> priorityQueue;
-    priorityQueue.push(1);
+//    int x = 5;
+//    vec.erase(std::remove_if(vec.begin(), vec.end(), [x](int n) { return x < n;}), vec.end());
+//    std::cout << "vec: ";
+//    std::for_each(vec.begin(), vec.end(), [](int i) {std::cout << i << " ";});
+//    std::cout << std::endl;
+//
+//    func([x](){std::cout << "lambda..." << std::endl << "x = " << x << std::endl; });
+//    std::priority_queue<int> priorityQueue;
+//    priorityQueue.push(1);
     std::make_heap(vec.begin(), vec.end());
+
+    std::for_each(vec.begin(), vec.end(), [](int value) {std::cout << value << " ";});
+    std::cout << std::endl;
     return 0;
 }
