@@ -71,6 +71,7 @@ void ArraySolution::print1ToMaxNNumbers(const int n)
     while(!Increment(numbers, n)) {
         printNumber(numbers, n);
     }
+    delete []numbers;
 //    std::cout << numbers << std::endl;
 //    printNumber(numbers, n);
 }
@@ -154,7 +155,7 @@ int ArraySolution::moreThanHalfNumberMethod_2(const int *data, int length) {
     for (int index = 1; index < length; ++index) {
         if (times == 0) {
             result = *(data + index);
-            continue;
+            //continue;
         }
         result == data[index] ? ++times : --times;
     }

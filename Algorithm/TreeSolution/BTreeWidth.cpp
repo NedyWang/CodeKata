@@ -33,9 +33,8 @@ int getBTreeWidth(BTreeNode *pRoot) {
                 ++width;
                 nodes.push(node->m_pRight);
             }
-
-            maxWidth = std::max(width, maxWidth);
         }
+        maxWidth = std::max(width, maxWidth);
     }
 
     return maxWidth;

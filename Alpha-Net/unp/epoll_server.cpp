@@ -47,11 +47,11 @@ void addEvent(int efd, int fd, bool et = false)
 
 
 /**
- * epoll server demo, LT(level trigle) model
+ * epoll server demo, LT(level trigger) model
  * @param: efd
  * @param: listen_fd
- * @param: events
- * @param: number
+ * @param: events triggered events
+ * @param: number the number of triggered events
  */
 void ltModel(int efd, int listen_fd, epoll_event *events, int number)
 {
@@ -83,11 +83,11 @@ void ltModel(int efd, int listen_fd, epoll_event *events, int number)
 }
 
 /**
- * epoll server demo, ET(edge trigle model)
+ * epoll server demo, ET(edge trigger model)
  * @param efd:
- * @param listen_fd:
- * @param events:
- * @param number
+ * @param listen_fd
+ * @param events triggered events
+ * @param number the number of triggered events
  */
 
 void etModel(int efd, int listen_fd, epoll_event *events, int number)

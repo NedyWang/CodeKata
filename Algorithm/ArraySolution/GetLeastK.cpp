@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <cstring>
+#include <queue>
 #include "ArraySolution.h"
 #include "../SortSolution/SortSolution.h"
 

@@ -30,7 +30,7 @@ void echoserver_select()
         client_fds[i] = -1;
     }
 
-    int max_fd = listen_fd + 1;
+    int max_fd = listen_fd;
     int max_i = 0;
     char buf[MAX_LEN];
 
@@ -40,7 +40,7 @@ void echoserver_select()
 
     while (true) {
         rset = all_set;
-        int n_ready = select(max_fd, &rset, nullptr, nullptr, nullptr);
+        int n_ready = select(max_fd + 1, &rset, nullptr, nullptr, nullptr);
         if (FD_ISSET(listen_fd, &rset)) {
             socklen_t client_len = sizeof(client_address);
             int conn_fd = accept(listen_fd, (struct sockaddr *) &client_address, &client_len);
@@ -112,7 +112,7 @@ void echoserver_poll()
 
     listen(listen_fd, 5);
 
-    int max_i = 0;
+    int max_i = 1;
     struct pollfd client[OPEN_MAX];
     client[0].fd = listen_fd;
     client[0].events = POLLRDNORM;

@@ -18,7 +18,7 @@
 #include <string>
 #include <vector>
 
-void doGenerateParenthesis(std::vector<std::string> &result, std::string str, int n, int m)
+void doGenerateParenthesis(std::vector<std::string> &result, std::string &&str, int n, int m)
 {
     if (n == 0 && m == 0) {
         result.push_back(str);
